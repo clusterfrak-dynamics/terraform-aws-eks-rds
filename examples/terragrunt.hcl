@@ -15,7 +15,7 @@ locals {
   aws_region   = basename(dirname(get_terragrunt_dir()))
   env          = "production"
   db_name      = replace(basename(get_terragrunt_dir()), "postgres-", "")
-  custom_tags  = yamldecode(file("${get_terragrunt_dir()}/${find_in_parent_folders("common_tags_unity.yaml")}"))
+  custom_tags  = yamldecode(file("${get_terragrunt_dir()}/${find_in_parent_folders("common_tags.yaml")}"))
 }
 
 inputs = {
