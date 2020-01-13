@@ -90,9 +90,9 @@ module "db" {
   vpc_security_group_ids = [aws_security_group.db.id]
 
   maintenance_window = var.db_maintenance_window
-  apply_immediately = var.db_apply_immediately
+  apply_immediately  = var.db_apply_immediately
 
-  backup_window      = var.db_backup_window
+  backup_window = var.db_backup_window
 
   backup_retention_period = var.db_backup_retention_period
 
