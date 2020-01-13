@@ -1,8 +1,3 @@
-variable "aws" {
-  type    = map(string)
-  default = {}
-}
-
 variable "eks" {
   type    = map(string)
   default = {}
@@ -19,11 +14,11 @@ variable "db_engine" {
 }
 
 variable "db_engine_version" {
-  default = "11.2"
+  default = "11.5"
 }
 
 variable "db_major_engine_version" {
-  default = "11.2"
+  default = "11"
 }
 
 variable "db_instance_class" {
@@ -87,19 +82,19 @@ variable "db_deletion_protection" {
   default = false
 }
 
-variable "db_parameters" {
-  type = any
+variable "db_apply_immediately" {
+  default = false
+  description = "Specifies whether any database modifications are applied immediately, or during the next maintenance window" 
+}
 
-  default = [
-    {
-      name  = "character_set_client"
-      value = "utf8"
-    },
-    {
-      name  = "character_set_server"
-      value = "utf8"
-    },
-  ]
+variable "db_ca_cert_identifier" {
+  default = "rds-ca-2019"
+  description = "Specifies the identifier of the CA certificate for the DB instance"
+}
+
+variable "db_parameters" {
+  type    = list
+  default = []
 }
 
 variable "db_multi_az" {
@@ -113,4 +108,8 @@ variable "inject_secret_into_ns" {
 
 variable "db_remote_security_group_id" {
   default = ""
+}
+
+variable "db_create_db_option_group" {
+  default = true
 }

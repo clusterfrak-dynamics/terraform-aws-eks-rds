@@ -14,9 +14,20 @@ resource "aws_security_group" "db" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+    self        = true
   }
 
   tags = var.db_tags
+}
+
+resource "aws_security_group_rule" "db-self" {
+  description       = "Allow db sg to communicate with each other"
+  from_port         = 0
+  protocol          = "-1"
+  security_group_id = aws_security_group.db.id
+  to_port           = 65535
+  type              = "ingress"
+  self              = true
 }
 
 resource "aws_security_group_rule" "db-eks" {
@@ -57,10 +68,14 @@ module "db" {
 
   identifier = "${var.db_identifier}-${var.env}"
 
-  engine               = var.db_engine
-  engine_version       = var.db_engine_version
-  family               = var.db_family
-  major_engine_version = var.db_major_engine_version
+  engine                 = var.db_engine
+  engine_version         = var.db_engine_version
+  family                 = var.db_family
+  major_engine_version   = var.db_major_engine_version
+  ca_cert_identifier     = var.db_ca_cert_identifier
+  create_db_option_group = var.db_create_db_option_group
+
+  parameters = var.db_parameters
 
   instance_class    = var.db_instance_class
   allocated_storage = var.db_allocated_storage
@@ -75,6 +90,8 @@ module "db" {
   vpc_security_group_ids = [aws_security_group.db.id]
 
   maintenance_window = var.db_maintenance_window
+  apply_immediately = var.db_apply_immediately
+
   backup_window      = var.db_backup_window
 
   backup_retention_period = var.db_backup_retention_period
