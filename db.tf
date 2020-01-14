@@ -139,6 +139,10 @@ output "db_instance_endpoint" {
   value = module.db.this_db_instance_endpoint
 }
 
+output "db_instance_username" {
+  value = module.db.this_db_instance_username
+}
+
 output "db_instance_password" {
   value     = module.db.this_db_instance_password
   sensitive = true
@@ -147,3 +151,4 @@ output "db_instance_password" {
 output "db_security_group_id" {
   value = aws_security_group.db.id
 }
+
