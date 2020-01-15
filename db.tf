@@ -152,3 +152,7 @@ output "db_security_group_id" {
   value = aws_security_group.db.id
 }
 
+output "db_instance_name" {
+  value = module.db.this_db_instance_name
+}
+
