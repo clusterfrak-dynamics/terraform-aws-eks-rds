@@ -37,6 +37,10 @@ variable "db_storage_type" {
   default = "gp2"
 }
 
+variable "db_max_allocated_storage" {
+  default = "0"
+}
+
 variable "db_name" {
   default = ""
 }
